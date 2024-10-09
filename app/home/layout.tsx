@@ -11,9 +11,9 @@ export default function layout({
   return (
     <div className={`flex h-full w-full`}>
       <Sidebar/>
-      <div>
+      <div className={`flex-1 px-2 flex flex-col`}>
         <Header/>
-        <main>{children}</main>
+        <main className={`flex-1`}>{children}</main>
         <Footer/>
       </div>
     </div>

@@ -45,7 +45,7 @@ const LoginPage = () => {
             <div className={`mb-4`}>
               <div className={`flex gap-1 justify-start items-center mb-2`}>
                 <AtSign className={`text-red-600`} />
-                <label>Correo</label>
+                <label className={`text-slate-800 dark:text-slate-800`}>Correo</label>
               </div>
               <input
                 type="text"
@@ -55,7 +55,7 @@ const LoginPage = () => {
             <div className={`mb-5`}>
               <div className={`flex gap-1 justify-start items-center mb-2`}>
                 <KeyRound className={`text-red-600`} />
-                <label>Contraseña</label>
+                <label className={`text-slate-800 dark:text-slate-800`}>Contraseña</label>
               </div>
               <input
                 type="password"

@@ -17,9 +17,7 @@ body,
   @apply bg-slate-100;
   @apply text-sm;
   @apply text-slate-800;
-
 }
-
 
 .bg-login {
   background-image: url(../public/images/bg.jpg);

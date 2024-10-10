@@ -3,7 +3,7 @@ import Header from "@/src/components/header";
 import Sidebar from "@/src/components/sidebar";
 
 
-export default function layout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

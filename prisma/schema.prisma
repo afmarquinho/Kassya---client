@@ -1,0 +1,159 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  User_id               Int      @id @default(autoincrement())
+  User_dni              Int      @unique
+  User_name             String
+  User_surname          String
+  User_email            String   @unique
+  User_password         String
+  User_phoneNumber      String
+  User_address          String
+  User_registrationDate DateTime @default(now())
+  Sales                 Sale[]
+
+  Purchase Purchase[]
+}
+
+model Customer {
+  Customer_id               Int        @id @default(autoincrement())
+  Customer_dni              Int        @unique
+  Customer_name             String
+  Customer_surname          String
+  Customer_email            String     @unique
+  Customer_phoneNumber      String
+  Customer_address          String
+  Customer_registrationDate DateTime   @default(now())
+  Sales                     Sale[]
+  Warranties                Warranty[]
+}
+
+model Supplier {
+  Supplier_id               Int          @id @default(autoincrement())
+  Supplier_nit              Int          @unique
+  Supplier_name             String
+  Supplier_contactInfo      String
+  Supplier_email            String       @unique
+  Supplier_phoneNumber      String
+  Supplier_city             String
+  Supplier_address          String
+  Supplier_registrationDate DateTime     @default(now())
+  Devolution                Devolution[]
+  Warranty                  Warranty[]
+  Purchase                  Purchase[]
+  Product                   Product[]
+}
+
+model Product {
+  Product_id           Int          @id @default(autoincrement())
+  Product_ref          String
+  Product_name         String
+  Product_descripcion  String
+  Product_cost         Decimal
+  Product_price        Decimal
+  Product_stockQty     Int
+  Product_supplierId   Int
+  Product_availability Boolean
+  Supplier             Supplier     @relation(fields: [Product_supplierId], references: [Supplier_id])
+  Devolution           Devolution[]
+  SalesProduct         SalesProduct?
+}
+
+model Sale {
+  Sale_id            Int              @id @default(autoincrement())
+  Sale_date          DateTime         @default(now())
+  Sale_consecutiveId Int
+  SaleConsecutive    SaleConsecutive?
+  Sale_customer_id   Int
+  Customer           Customer         @relation(fields: [Sale_customer_id], references: [Customer_id], onDelete: Cascade)
+  Sale_totalAmount   Decimal
+  Sale_userId        Int
+  Waranty            Warranty[]
+  SaleSummary        SalesSummary?
+  SalesProduct       SalesProduct[]   //@relation(onDelete: Cascade) 
+  Devolution         Devolution[]
+  User               User?            @relation(fields: [Sale_userId], references: [User_id])
+}
+
+model SaleConsecutive {
+  Consecutive_id     Int    @id @default(autoincrement())
+  Consecutive_code   String @unique
+  Consecutive_SaleId Int    @unique
+  Sale               Sale?  @relation(fields: [Consecutive_SaleId], references: [Sale_id])
+}
+
+model SalesProduct {
+  SalesProd_id        Int     @id @default(autoincrement())
+  SalesProd_saleId    Int
+  Sales               Sale    @relation(fields: [SalesProd_saleId], references: [Sale_id])
+  SalesProd_productId Int @unique
+  Product             Product @relation(fields: [SalesProd_productId], references: [Product_id])
+  SalesProd_quantity  Int
+  SalesProd_unitPrice Decimal
+}
+
+model Purchase {
+  Purchase_id          Int             @id @default(autoincrement())
+  Purchase_date        DateTime        @default(now())
+  Purchase_totalAmount Decimal
+  Purchase_userId      Int
+  Purchase_supplierId  Int
+  User                 User            @relation(fields: [Purchase_userId], references: [User_id])
+  Supplier             Supplier        @relation(fields: [Purchase_supplierId], references: [Supplier_id])
+  ExpenseSummary       ExpenseSummary?
+}
+
+model Warranty {
+  Warranty_id          Int      @id @default(autoincrement())
+  Warranty_description String
+  Warranty_date        DateTime @default(now())
+  Warranty_saleId      Int
+  Sale                 Sale     @relation(fields: [Warranty_saleId], references: [Sale_id])
+  Warranty_customerId  Int
+  Customer             Customer @relation(fields: [Warranty_customerId], references: [Customer_id])
+  Warranty_supplierId  Int
+  Supplier             Supplier @relation(fields: [Warranty_supplierId], references: [Supplier_id])
+}
+
+model SalesSummary {
+  SalesSumm_id          Int      @id @default(autoincrement())
+  SalesSumm_saleId      Int      @unique
+  Sale                  Sale     @relation(fields: [SalesSumm_saleId], references: [Sale_id])
+  SalesSumm_totalAmount Decimal
+  SalesSumm_date        DateTime
+}
+
+model ExpenseSummary {
+  ExpSummary_id            Int      @id @default(autoincrement())
+  ExpSummary_purchaseId    Int      @unique
+  ExpSummary_totalExpenses Decimal
+  ExpSummary_date          DateTime
+  Purchase                 Purchase @relation(fields: [ExpSummary_purchaseId], references: [Purchase_id])
+}
+
+model Devolution {
+  Dev_id          Int      @id @default(autoincrement())
+  Dev_productId   Int
+  Dev_description String
+  Dev_saleId      Int
+  Dev_quantity    Int
+  Dev_unitPrice   Decimal // Changed to Decimal for consistency
+  Dev_date        DateTime @default(now())
+  Dev_supplierId  Int
+  Sale            Sale     @relation(fields: [Dev_saleId], references: [Sale_id])
+  Product         Product  @relation(fields: [Dev_productId], references: [Product_id])
+  Supplier        Supplier @relation(fields: [Dev_supplierId], references: [Supplier_id])
+}

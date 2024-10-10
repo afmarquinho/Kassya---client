@@ -24,7 +24,7 @@ const Sidebar = () => {
     >
       <div className={`flex items-center justify-between p-3`}>
         {/* DIV TO WRAP LOGO AND NAME */}
-        <div className={`flex justify-start items-center`}>
+        <div className={`flex justify-start items-center gap-1`}>
           <div
             className={`bg-white p-1 ${isSidebarCollapsed ? "hidden md:block" : "block"}`}
           >

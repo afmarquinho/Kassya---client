@@ -13,119 +13,119 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  MANAGER
+  USER
+}
+
+enum Location {
+  UNRECEIVED
+  WAREHOUSE
+}
+
 model User {
-  User_id               Int      @id @default(autoincrement())
-  User_dni              Int      @unique
+  User_id               Int        @id @default(autoincrement())
+  User_dni              Int        @unique
+  User_role             Role       @default(USER)
   User_name             String
   User_surname          String
-  User_email            String   @unique
+  User_email            String     @unique
   User_password         String
   User_phoneNumber      String
   User_address          String
-  User_registrationDate DateTime @default(now())
+  User_registrationDate DateTime // @default(now())
   Sales                 Sale[]
-
-  Purchase Purchase[]
+  Purchase              Purchase[]
 }
 
 model Customer {
-  Customer_id               Int        @id @default(autoincrement())
-  Customer_dni              Int        @unique
+  Customer_id               Int      @id @default(autoincrement())
+  Customer_dni              Int      @unique
   Customer_name             String
   Customer_surname          String
-  Customer_email            String     @unique
+  Customer_email            String   @unique
   Customer_phoneNumber      String
   Customer_address          String
-  Customer_registrationDate DateTime   @default(now())
+  Customer_registrationDate DateTime //@default(now())
   Sales                     Sale[]
-  Warranties                Warranty[]
 }
 
 model Supplier {
-  Supplier_id               Int          @id @default(autoincrement())
-  Supplier_nit              Int          @unique
+  Supplier_id               Int        @id @default(autoincrement())
+  Supplier_nit              Int        @unique
   Supplier_name             String
   Supplier_contactInfo      String
-  Supplier_email            String       @unique
+  Supplier_email            String     @unique
   Supplier_phoneNumber      String
   Supplier_city             String
   Supplier_address          String
-  Supplier_registrationDate DateTime     @default(now())
-  Devolution                Devolution[]
-  Warranty                  Warranty[]
+  Supplier_registrationDate DateTime //@default(now())
   Purchase                  Purchase[]
-  Product                   Product[]
 }
 
 model Product {
-  Product_id           Int          @id @default(autoincrement())
+  Product_id           Int           @id @default(autoincrement())
   Product_ref          String
   Product_name         String
-  Product_descripcion  String
+  Product_description  String
   Product_cost         Decimal
   Product_price        Decimal
   Product_stockQty     Int
-  Product_supplierId   Int
   Product_availability Boolean
-  Supplier             Supplier     @relation(fields: [Product_supplierId], references: [Supplier_id])
-  Devolution           Devolution[]
-  SalesProduct         SalesProduct?
+  Product_location     Location      @default(UNRECEIVED)
+  Product_purchaseId   Int
+  SaleDetails          SaleDetails[]
+  purchase             Purchase      @relation(fields: [Product_purchaseId], references: [Purchase_id])
 }
 
 model Sale {
-  Sale_id            Int              @id @default(autoincrement())
-  Sale_date          DateTime         @default(now())
-  Sale_consecutiveId Int
-  SaleConsecutive    SaleConsecutive?
-  Sale_customer_id   Int
-  Customer           Customer         @relation(fields: [Sale_customer_id], references: [Customer_id], onDelete: Cascade)
-  Sale_totalAmount   Decimal
-  Sale_userId        Int
-  Waranty            Warranty[]
-  SaleSummary        SalesSummary?
-  SalesProduct       SalesProduct[]   //@relation(onDelete: Cascade) 
-  Devolution         Devolution[]
-  User               User?            @relation(fields: [Sale_userId], references: [User_id])
+  Sale_id          Int           @id @default(autoincrement())
+  Sale_date        DateTime //@default(now())
+  Sale_code        String?       @unique
+  Sale_customer_id Int
+  Customer         Customer      @relation(fields: [Sale_customer_id], references: [Customer_id], onDelete: Cascade)
+  Sale_totalAmount Decimal
+  Sale_userId      Int
+  SaleSummary      SalesSummary?
+  SaleDetails      SaleDetails[] //@relation(onDelete: Cascade) 
+  User             User          @relation(fields: [Sale_userId], references: [User_id])
 }
 
-model SaleConsecutive {
-  Consecutive_id     Int    @id @default(autoincrement())
-  Consecutive_code   String @unique
-  Consecutive_SaleId Int    @unique
-  Sale               Sale?  @relation(fields: [Consecutive_SaleId], references: [Sale_id])
-}
-
-model SalesProduct {
-  SalesProd_id        Int     @id @default(autoincrement())
-  SalesProd_saleId    Int
-  Sales               Sale    @relation(fields: [SalesProd_saleId], references: [Sale_id])
-  SalesProd_productId Int @unique
-  Product             Product @relation(fields: [SalesProd_productId], references: [Product_id])
-  SalesProd_quantity  Int
-  SalesProd_unitPrice Decimal
+model SaleDetails {
+  SaleDetail_id        Int          @id @default(autoincrement())
+  SaleDetail_saleId    Int
+  Sales                Sale         @relation(fields: [SaleDetail_saleId], references: [Sale_id])
+  SaleDetail_productId Int
+  Product              Product      @relation(fields: [SaleDetail_productId], references: [Product_id])
+  SaleDetail_quantity  Int
+  SaleDetail_unitPrice Decimal
+  SaleDetail_total     Decimal
+  Warranty             Warranty[]
+  Devolution           Devolution[]
 }
 
 model Purchase {
-  Purchase_id          Int             @id @default(autoincrement())
-  Purchase_date        DateTime        @default(now())
-  Purchase_totalAmount Decimal
-  Purchase_userId      Int
-  Purchase_supplierId  Int
-  User                 User            @relation(fields: [Purchase_userId], references: [User_id])
-  Supplier             Supplier        @relation(fields: [Purchase_supplierId], references: [Supplier_id])
-  ExpenseSummary       ExpenseSummary?
+  Purchase_id            Int             @id @default(autoincrement())
+  Purchase_description   String
+  Purchase_date          DateTime // @default(now())
+  Purchase_totalAmount   Decimal
+  Purchase_userId        Int
+  Purchase_supplierId    Int
+  Purchase_paymentMethod String
+  Purchase_dueDate       DateTime
+  User                   User            @relation(fields: [Purchase_userId], references: [User_id])
+  Supplier               Supplier        @relation(fields: [Purchase_supplierId], references: [Supplier_id])
+  ExpenseSummary         ExpenseSummary?
+  Product                Product[]
 }
 
 model Warranty {
-  Warranty_id          Int      @id @default(autoincrement())
-  Warranty_description String
-  Warranty_date        DateTime @default(now())
-  Warranty_saleId      Int
-  Sale                 Sale     @relation(fields: [Warranty_saleId], references: [Sale_id])
-  Warranty_customerId  Int
-  Customer             Customer @relation(fields: [Warranty_customerId], references: [Customer_id])
-  Warranty_supplierId  Int
-  Supplier             Supplier @relation(fields: [Warranty_supplierId], references: [Supplier_id])
+  Warranty_id           Int         @id @default(autoincrement())
+  Warranty_description  String
+  Warranty_date         DateTime // @default(now())
+  Warranty_saleDetailId Int
+  SaleDetail            SaleDetails @relation(fields: [Warranty_saleDetailId], references: [SaleDetail_id])
 }
 
 model SalesSummary {
@@ -137,23 +137,19 @@ model SalesSummary {
 }
 
 model ExpenseSummary {
-  ExpSummary_id            Int      @id @default(autoincrement())
-  ExpSummary_purchaseId    Int      @unique
-  ExpSummary_totalExpenses Decimal
-  ExpSummary_date          DateTime
-  Purchase                 Purchase @relation(fields: [ExpSummary_purchaseId], references: [Purchase_id])
+  ExpSumm_id            Int      @id @default(autoincrement())
+  ExpSumm_purchaseId    Int      @unique
+  ExpSumm_totalExpenses Decimal
+  ExpSumm_date          DateTime
+  Purchase              Purchase @relation(fields: [ExpSumm_purchaseId], references: [Purchase_id])
 }
 
 model Devolution {
-  Dev_id          Int      @id @default(autoincrement())
-  Dev_productId   Int
-  Dev_description String
-  Dev_saleId      Int
-  Dev_quantity    Int
-  Dev_unitPrice   Decimal // Changed to Decimal for consistency
-  Dev_date        DateTime @default(now())
-  Dev_supplierId  Int
-  Sale            Sale     @relation(fields: [Dev_saleId], references: [Sale_id])
-  Product         Product  @relation(fields: [Dev_productId], references: [Product_id])
-  Supplier        Supplier @relation(fields: [Dev_supplierId], references: [Supplier_id])
+  Dev_id            Int         @id @default(autoincrement())
+  Dev_description   String
+  Dev_saleDetailsId Int
+  Dev_quantity      Int
+  Dev_unitPrice     Decimal
+  Dev_date          DateTime // @default(now())
+  SaleDetails       SaleDetails @relation(fields: [Dev_saleDetailsId], references: [SaleDetail_id])
 }

@@ -13,7 +13,7 @@ const LoginPage = () => {
 
   return (
     <div
-      className={`bg-login w-full h-full bg-cover bg-top relative flex flex-col`}
+      className={`bg-login w-full h-screen bg-cover bg-top relative flex flex-col`}
     >
       <div className={`absolute inset-0 bg-black bg-opacity-80`}></div>
       <h1

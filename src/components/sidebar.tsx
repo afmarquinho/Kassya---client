@@ -11,14 +11,14 @@ import {
 import SidebarLinks from "./sidebarLinks";
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
-import { useStore } from "../store";
+import { useStore } from "../utils/store";
 
 const Sidebar = () => {
   const { isSidebarCollapsed, setSidebarCollapsed } = useStore();
 
   return (
     <div
-      className={`bg-white dark:bg-slate-800 fixed md:static h-full z-10 
+      className={`bg-white dark:bg-slate-800 fixed md:relative min-h-full md:min-h-full z-10 transition-all 
     ${isSidebarCollapsed ? "w-0 md:w-14" : "w-64"}
     `}
     >
@@ -29,7 +29,7 @@ const Sidebar = () => {
             className={`bg-white p-1 ${isSidebarCollapsed ? "hidden md:block" : "block"}`}
           >
             <div className={`w-6 h-7 relative`}>
-              <Image src={logo} alt="Kassya" fill className={``}/>
+              <Image src={logo} alt="Kassya" fill className={``} />
             </div>
           </div>
           <p
@@ -44,10 +44,10 @@ const Sidebar = () => {
         <button
           onClick={setSidebarCollapsed}
           className={`hover:bg-slate-200 dark:hover:bg-slate-800 p-2 rounded-full  ${
-              isSidebarCollapsed ? "hidden" : "block md:hidden"
-            }`}
+            isSidebarCollapsed ? "hidden" : "block md:hidden"
+          }`}
         >
-          <X className={`text-red-500 dark:text-yellow-500}`} />
+          <X className={`text-red-500 dark:text-yellow-500`} />
         </button>
       </div>
 

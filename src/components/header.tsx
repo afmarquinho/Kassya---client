@@ -1,6 +1,6 @@
 "use client";
 import { AlignJustify, Moon, Sun } from "lucide-react";
-import { useStore } from "../store";
+import { useStore } from "../utils/store";
 
 const Header = () => {
   const { isDark, setDarkMode, setSidebarCollapsed } = useStore();

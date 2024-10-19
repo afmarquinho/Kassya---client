@@ -34,3 +34,17 @@ export type authUserType = {
     Supplier_registrationDate: Date;
     Supplier_userId : number;
   };
+
+  export type CustomerType = {
+    Customer_id: number;
+    Customer_dni: number;
+    Customer_name: string;
+    Customer_surname: string;
+    Customer_email: string;
+    Customer_phoneNumber: string;
+    Customer_address: string;
+    Customer_habeasData: boolean; 
+    Customer_registrationDate: Date; 
+    Customer_userId: number;
+  };
+  

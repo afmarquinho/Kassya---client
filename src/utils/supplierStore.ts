@@ -29,7 +29,7 @@ export const supplierStore = create<State & Action>((set) => ({
       const response = await axiosClient.get("/suppliers");
       set({ suppliers: response.data.data });
     } catch (error) {
-      console.error("Error fetching suppliers:", error);
+      console.error("Error al hacer fetch a proveedores:", error);
     }
   },
   updateSuppliers: (supplier, action) => {

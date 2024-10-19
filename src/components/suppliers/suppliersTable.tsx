@@ -1,13 +1,12 @@
 "use client";
 import { FilePenLine, Search } from "lucide-react";
-//import EditSupplierModal from "./editUserModal";
 import { SupplierType } from "@/src/types";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supplierStore } from "@/src/utils/supplierStore";
 import EditSupplierModal from "./editSupplierModal";
 
-const SupplierTable = () => {
+const SuppliersTable = () => {
   const router = useRouter();
   const { suppliers, setSupplier, setEditSupplierModal, editSupplierModalOpen,cleanSupplier } = supplierStore();
 
@@ -92,4 +91,4 @@ const SupplierTable = () => {
     </div>
   );
 };
-export default SupplierTable;
+export default SuppliersTable;

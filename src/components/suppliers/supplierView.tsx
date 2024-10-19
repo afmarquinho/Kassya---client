@@ -40,7 +40,7 @@ const SupplierView = () => {
             <td className={`p-3`}>{supplier?.Supplier_email}</td>
           </tr>
           <tr>
-            <th className={`italic`}>Teleéfono</th>
+            <th className={`italic`}>Teléfono</th>
             <td className={`p-3`}>{supplier?.Supplier_phoneNumber}</td>
           </tr>
           <tr>

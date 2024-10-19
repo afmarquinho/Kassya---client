@@ -1,5 +1,5 @@
 import GetUsersButton from "@/src/components/users/getUsersButton";
-import UserTable from "@/src/components/users/userTable";
+import UserTable from "@/src/components/users/usersTable";
 
 import { UserPlus } from "lucide-react";
 import Link from "next/link";

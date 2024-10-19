@@ -13,7 +13,7 @@ type Action = {
 // Crear el store
 export const useStore = create<State & Action>((set) => ({
   isDark: false,
-  isSidebarCollapsed: true,
+  isSidebarCollapsed: false,
 
   setDarkMode: () => {
     set((state) => {

@@ -6,7 +6,7 @@ import { UserType } from "@/src/types";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-const UserTable = () => {
+const UsersTable = () => {
   const router = useRouter();
   const { users, editUserModalOpen, setEditUserModal, setUser, cleanUser } =
     userStore();
@@ -99,4 +99,4 @@ const UserTable = () => {
     </div>
   );
 };
-export default UserTable;
+export default UsersTable;

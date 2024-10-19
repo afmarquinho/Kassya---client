@@ -3,6 +3,7 @@ import {
   CircleDollarSign,
   CircleUserRound,
   ClipboardPen,
+  NotebookText,
   PanelsTopLeft,
   ShoppingBag,
   UserRoundCog,
@@ -27,7 +28,9 @@ const Sidebar = () => {
         {/* DIV TO WRAP LOGO AND NAME */}
         <div className={`flex justify-start items-center gap-1`}>
           <div
-            className={`bg-white p-1 ${isSidebarCollapsed ? "hidden md:block" : "block"}`}
+            className={`bg-white p-1 ${
+              isSidebarCollapsed ? "hidden md:block" : "block"
+            }`}
           >
             <div className={`w-6 h-7 relative`}>
               <Image src={logo} alt="Kassya" fill className={``} />
@@ -56,7 +59,6 @@ const Sidebar = () => {
         label="Dashboard"
         href="/home/dashboard"
         icon={PanelsTopLeft}
-
       />
       <SidebarLinks label="Sales" href="/home/sales" icon={CircleDollarSign} />
       <SidebarLinks
@@ -64,14 +66,14 @@ const Sidebar = () => {
         href="/home/purchase"
         icon={ShoppingBag}
       />
+      <SidebarLinks label="Masters" href="/home/masters" icon={ClipboardPen} />
+      <SidebarLinks label="Reports" href="/home/reports" icon={NotebookText} />
+      <SidebarLinks label="Warranty" href="/home/warranty" icon={Wrench} />
       <SidebarLinks
         label="Manage Users"
         href="/home/users"
         icon={UserRoundCog}
       />
-      <SidebarLinks label="Masters" href="/home/masters" icon={ClipboardPen} />
-      <SidebarLinks label="Reports" href="/home/reports" icon={UserRoundCog} />
-      <SidebarLinks label="Warranty" href="/home/warranty" icon={Wrench} />
       <SidebarLinks
         label="My Profile"
         href="/home/profile"

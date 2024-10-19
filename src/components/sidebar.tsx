@@ -3,6 +3,7 @@ import {
   CircleDollarSign,
   CircleUserRound,
   ClipboardPen,
+  PanelsTopLeft,
   ShoppingBag,
   UserRoundCog,
   Wrench,
@@ -54,7 +55,8 @@ const Sidebar = () => {
       <SidebarLinks
         label="Dashboard"
         href="/home/dashboard"
-        icon={ClipboardPen}
+        icon={PanelsTopLeft}
+
       />
       <SidebarLinks label="Sales" href="/home/sales" icon={CircleDollarSign} />
       <SidebarLinks
@@ -67,8 +69,8 @@ const Sidebar = () => {
         href="/home/users"
         icon={UserRoundCog}
       />
-      <SidebarLinks label="Masters" href="/home/masters" icon={ShoppingBag} />
-      <SidebarLinks label="Reports" href="/home/masters" icon={UserRoundCog} />
+      <SidebarLinks label="Masters" href="/home/masters" icon={ClipboardPen} />
+      <SidebarLinks label="Reports" href="/home/reports" icon={UserRoundCog} />
       <SidebarLinks label="Warranty" href="/home/warranty" icon={Wrench} />
       <SidebarLinks
         label="My Profile"

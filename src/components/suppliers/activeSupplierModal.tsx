@@ -1,25 +1,26 @@
 "use client";
-import { TriangleAlert, UserRoundX, X } from "lucide-react";
-import { userStore } from "../../utils/userStore";
+import { TriangleAlert, X, CirclePower } from "lucide-react";
 import axiosClient from "@/src/axiosClient";
-import { UserType } from "@/src/types";
+import { SupplierType } from "@/src/types";
+import { supplierStore } from "@/src/utils/supplierStore";
 
-const ActiveUserModal = () => {
-  const { user, setActiveModal, setUser, updateUsers } = userStore();
+const ActivesupplierModal = () => {
+  const { supplier, setActiveModal, setSupplier, updateSuppliers } =
+    supplierStore();
 
-  const handleActiveUser = async () => {
+  const handleActiveSupplier = async () => {
     setActiveModal();
-    const usr: UserType | null = user
+    const supp: SupplierType | null = supplier
       ? {
-          ...user,
-          User_active: !user?.User_active,
+          ...supplier,
+          Supplier_active: !supplier?.Supplier_active,
         }
       : null;
     try {
-      await axiosClient.put("/users", usr);
-      if (usr) {
-        setUser(usr);
-        updateUsers(usr, "update");
+      await axiosClient.put("/suppliers", supp);
+      if (supp) {
+        setSupplier(supp);
+        updateSuppliers(supp, "update");
       }
     } catch (error) {
       console.error(error);
@@ -38,7 +39,7 @@ const ActiveUserModal = () => {
           />
           <button
             className={`absolute top-2 right-2 ${
-              user?.User_active
+              supplier?.Supplier_active
                 ? "bg-red-800 hover:bg-red-950"
                 : "bg-green-800 hover:bg-green-950"
             }`}
@@ -48,7 +49,7 @@ const ActiveUserModal = () => {
           </button>
           <h2
             className={`bg-gradient-to-b  text-center text-white uppercase font-bold py-3 ${
-              user?.User_active
+              supplier?.Supplier_active
                 ? "from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
                 : "from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
             }`}
@@ -58,26 +59,25 @@ const ActiveUserModal = () => {
         </div>
         <div className={`p-4`}>
           <p>
-            ¿Realmente deseas {user?.User_active ? "Desactivar" : "Activar"} a{" "}
-            <span className={`font-bold`}>
-              {user?.User_name} {user?.User_surname}?
-            </span>
+            ¿Realmente deseas{" "}
+            {supplier?.Supplier_active ? "Desactivar" : "Activar"} al proveedor{" "}
+            <span className={`font-bold`}>{supplier?.Supplier_name}</span>
           </p>
 
           <button
             className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-all mx-auto mt-5 uppercase font-semibold shadow-md bg-gradient-to-b ${
-              user?.User_active
+              supplier?.Supplier_active
                 ? "from-red-600 to-red-700 hover:from-red-700 hover:to-red-800"
                 : "from-green-600 to-green-700 hover:from-green-700 hover:to-green-800"
             }`}
-            onClick={handleActiveUser}
+            onClick={handleActiveSupplier}
           >
-            <UserRoundX className={`w-5`} />
-            {user?.User_active ? "Desactivar" : "Activar"}
+            <CirclePower className={`w-5`} />
+            {supplier?.Supplier_active ? "Desactivar" : "Activar"}
           </button>
         </div>
       </div>
     </div>
   );
 };
-export default ActiveUserModal;
+export default ActivesupplierModal;

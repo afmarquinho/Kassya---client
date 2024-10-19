@@ -14,3 +14,23 @@ export type UserData = {
   User_address: string;
 };
 export type UserType = User1 & UserData;
+
+export type authUserType = {
+  User_id: number;
+  User_name: string;
+  User_surname: string;
+};
+
+  export type SupplierType = {
+    Supplier_id: number;
+    Supplier_nit: number;
+    Supplier_name: string;
+    Supplier_contactInfo: string;
+    Supplier_email: string;
+    Supplier_phoneNumber: string;
+    Supplier_city: string;
+    Supplier_address: string;
+    Supplier_active: boolean;
+    Supplier_registrationDate: Date;
+    Supplier_userId : number;
+  };

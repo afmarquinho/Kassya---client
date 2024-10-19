@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { UserType } from "../types";
+import { authUserType, UserType } from "../types";
 import axiosClient from "../axiosClient";
 
 type State = {
@@ -7,6 +7,7 @@ type State = {
   user: UserType | null;
   activeModalOpen: boolean;
   editUserModalOpen: boolean;
+  authUser: authUserType | null;
 };
 
 type Action = {
@@ -23,6 +24,11 @@ export const userStore = create<State & Action>((set) => ({
   user: null,
   activeModalOpen: false,
   editUserModalOpen: false,
+  authUser: {
+    User_id: 10,
+    User_name: "Juan",
+    User_surname: "Pérez",
+  },
 
   fetchUsers: async () => {
     try {
@@ -37,7 +43,7 @@ export const userStore = create<State & Action>((set) => ({
   },
 
   updateUsers: (user, action) => {
-    //* UTILIZAR LA MISMA FUNCION PARA AGRGAR UN NUEVO USER AL ESTADO SI SE CREA, EN ESTE CASO EL ACTION ES ADD, SINO ES UPDATE Y SOLO ACTUALIZA EL ARRAY DE USER CON EL USER ACTUALIZADO
+    //* UTILIZAR LA MISMA FUNCION PARA AGRGAR UN NUEVO USER AL ESTADO SI SE CREA, EN ESTE CASO EL ACTION ES ADD, SINO ES UPDATE Y SOLO ACTUALIZA EL ARRAY DE USER CON EL USER EDITADO.
     if (!user) {
       console.error("Usuario no válido");
       return;

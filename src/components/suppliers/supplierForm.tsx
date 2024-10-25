@@ -12,7 +12,7 @@ import { z } from "zod";
 type FormValuesType = z.infer<typeof supplierSchema>;
 
 const SupplierForm = () => {
-  const { supplier, updateSuppliers, setEditSupplierModal } = supplierStore();
+  const { supplier, updateSuppliers, setEditSupplierModal, cleanSupplier } = supplierStore();
   const { authUser } = userStore();
   const router = useRouter();
 
@@ -48,7 +48,7 @@ const SupplierForm = () => {
       }
       router.back();
     }
-    //cleanUser();
+    cleanSupplier();
     reset();
   };
   useEffect(() => {

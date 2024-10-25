@@ -1,8 +1,9 @@
 import BackButton from "@/src/components/backButton";
+import NewButton from "@/src/components/newButton";
 import GetSuppliersButton from "@/src/components/suppliers/getSuppliersButton";
 import SupplierTable from "@/src/components/suppliers/suppliersTable";
-import { Archive} from "lucide-react";
-import Link from "next/link";
+import { Archive } from "lucide-react";
+
 
 const SuppliersPage = () => {
   //TODO: ORDENER LA TABLA POR APELLI CUANDO SE EDITE PARA QUE NO AGREGE EL PROVEEDOR AL FINAL.
@@ -12,13 +13,11 @@ const SuppliersPage = () => {
       <div className={`flex justify-between gap-5`}>
         <div className={`flex gap-5`}>
           <GetSuppliersButton />
-          <Link
-          href={"suppliers/new"}
-          className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-all bg-blue-500 hover:bg-blue-600 dark:bg-indigo-800 dark:hover:bg-indigo-700 `}
-        >
-          <Archive className={`w-5`} />
-          Nuevo Proveedor
-        </Link>
+          <NewButton
+            name="Nuevo Proveedor"
+            href="suppliers/new"
+            icon={Archive}
+          />
         </div>
         <BackButton />
       </div>

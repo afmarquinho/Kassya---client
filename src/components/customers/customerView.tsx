@@ -1,6 +1,6 @@
 "use client";
 import { customerStore } from "@/src/utils/customerStore";
-import { ShoppingBag, ShoppingCart } from "lucide-react";
+import {  ShoppingCart } from "lucide-react";
 
 const CustomerView = () => {
   const { customer } = customerStore();
@@ -8,7 +8,7 @@ const CustomerView = () => {
   if (!customer) {
     return (
       <div className={`text-base italic font-semibold`}>
-        No has seleccionado un proveedor para visualizar
+        No has seleccionado un cliente para visualizar.
       </div>
     );
   }

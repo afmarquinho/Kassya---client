@@ -1,7 +1,7 @@
 import BackButton from "@/src/components/backButton";
 import CustomerForm from "@/src/components/customers/customerForm";
 
-const NewSupplierPage = () => {
+const NewCustomerPage = () => {
   return (
     <>
       <div className={`flex justify-end gap-5 mb-5`}>
@@ -13,4 +13,4 @@ const NewSupplierPage = () => {
     </>
   );
 };
-export default NewSupplierPage;
+export default NewCustomerPage;

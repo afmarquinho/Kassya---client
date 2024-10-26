@@ -8,9 +8,6 @@ const purchaseSchema = z.object({
     })
     .min(1, "Digite un téxto válido")
     .max(250, "Descripción demasiado larga"),
-  Purchase_totalAmount: z
-    .number()
-    .positive("El monto de la compra debe ser un número válido"),
   Purchase_userId: z
     .number({
       required_error: "La descripción es obligatoria",

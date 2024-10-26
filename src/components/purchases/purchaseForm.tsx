@@ -1,5 +1,7 @@
 "use client";
 
+import axiosClient from "@/src/axiosClient";
+import { formattedDate } from "@/src/utils/helpers";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { supplierStore } from "@/src/utils/supplierStore";
 import { userStore } from "@/src/utils/userStore";
@@ -12,29 +14,67 @@ import { z } from "zod";
 type FormValuesTypes = z.infer<typeof purchaseSchema>;
 
 const PurchaseForm = () => {
-  const { purchaseEdit } = purchaseStore();
-  const { suppliers, fetchSuppliers } = supplierStore();
+ 
+  const {
+    purchaseEdit,
+    updatePurchases,
+    toggleEditPurchaseModal,
+    clearPurchaseEdit,
+  } = purchaseStore();
+  const { suppliers } = supplierStore();
   const { authUser } = userStore();
 
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
-  } = useForm<FormValuesTypes>({ resolver: zodResolver(purchaseSchema) });
+  } = useForm<FormValuesTypes>({
+    resolver: zodResolver(purchaseSchema),
+    //defaultValues: purchaseEdit || {},
+  });
 
-  const onSubmit: SubmitHandler<FormValuesTypes> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormValuesTypes> = async (data) => {
+    try {
+      if (purchaseEdit) {
+        const response = await axiosClient.put(
+          `/purchases/${purchaseEdit.Purchase_id}`,
+          {
+            ...data,
+            Purchase_dueDate: formattedDate(data.Purchase_dueDate),
+          }
+        );
+        updatePurchases(response.data.data, "update");
+      } else {
+        const response = await axiosClient.post("/purchases", {
+          ...data,
+          Purchase_dueDate: formattedDate(data.Purchase_dueDate),
+        });
+        updatePurchases(response.data.data, "add");
+      }
+      toggleEditPurchaseModal();
+      clearPurchaseEdit();
+      reset();
+    } catch (error) {
+      console.error("Error en la operación de compra:", error);
+    }
   };
 
   useEffect(() => {
     if (!authUser) {
       return;
     }
-    fetchSuppliers();
+
     setValue("Purchase_userId", authUser.User_id);
-    setValue("Purchase_totalAmount", 1);
-  }, [authUser, setValue, fetchSuppliers]);
+
+    if (purchaseEdit) {
+      setValue("Purchase_description", purchaseEdit.Purchase_description);
+      setValue("Purchase_supplierId", purchaseEdit.Purchase_supplierId);
+      setValue("Purchase_paymentMethod", purchaseEdit.Purchase_paymentMethod);
+      setValue("Purchase_dueDate", purchaseEdit.Purchase_dueDate);
+    }
+  }, [authUser, setValue, purchaseEdit]);
 
   return (
     <>
@@ -110,7 +150,7 @@ const PurchaseForm = () => {
         <div className="w-full flex justify-center">
           <input
             type="submit"
-            className="bg-indigo-700 hover:bg-indigo-600 text-slate-200 font-semibold text-base p-2 focus:outline-none rounded-md cursor-pointer w-full mt-4 max-w-96 transition-colors"
+            className="bg-indigo-700 hover:bg-blue-600 text-slate-200 font-semibold text-base p-2 focus:outline-none rounded-md cursor-pointer w-full mt-4 max-w-96 transition-colors"
             value={purchaseEdit ? "Editar" : "Crear"}
           />
         </div>

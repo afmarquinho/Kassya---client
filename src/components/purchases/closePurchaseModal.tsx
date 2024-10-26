@@ -3,10 +3,10 @@ import { purchaseStore } from "@/src/utils/purchaseStore";
 import { TriangleAlert, X } from "lucide-react";
 
 const ClosePurchaseModal = () => {
-  const { setClosePurchaseModalOpen, purchaseDetails: purchase, closePurchase } =
+  const { toggleClosePurchaseModal, purchaseDetails: purchase, closePurchase } =
     purchaseStore();
   const handleClosePurchase = async () => {
-    setClosePurchaseModalOpen();
+    toggleClosePurchaseModal();
     try {
       await axiosClient.put(`/purchases/${purchase?.Purchase_id}`);
       closePurchase();
@@ -27,7 +27,7 @@ const ClosePurchaseModal = () => {
           />
           <button
             className={`absolute top-2 right-2 "bg-red-800 hover:bg-red-950`}
-            onClick={setClosePurchaseModalOpen}
+            onClick={toggleClosePurchaseModal}
           >
             <X className={`  text-yellow-400 cursor-pointer`} strokeWidth={3} />
           </button>

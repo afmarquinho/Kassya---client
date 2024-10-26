@@ -2,10 +2,12 @@
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { FilePenLine, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import EditPurchaseModal from "./editPurchaseModal";
 import { desformatearFecha } from "@/src/utils/helpers";
 import { PurchasesType } from "@/src/types";
+import { supplierStore } from "@/src/utils/supplierStore";
+import LoadingSpinner from "../loadingSpinner";
 
 const PurchasesTable = () => {
   const router = useRouter();
@@ -17,14 +19,19 @@ const PurchasesTable = () => {
     toggleEditPurchaseModal,
     setPurchaseEdit,
   } = purchaseStore();
+  const { fetchSuppliers } = supplierStore();
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleEdit = (purchase: PurchasesType) => {
+  const handleEdit = async (purchase: PurchasesType) => {
+    setLoading(true);
+    await fetchSuppliers();
+    setLoading(false);
     setPurchaseEdit(purchase);
     toggleEditPurchaseModal();
   };
 
-  const handleView = (purchaseId: number) => {
-    fetchPurchaseDetails(purchaseId);
+  const handleView = async (purchaseId: number) => {
+    await fetchPurchaseDetails(purchaseId);
     router.push("/home/purchase/management/view");
   };
 
@@ -93,6 +100,7 @@ const PurchasesTable = () => {
         </tbody>
       </table>
       {isEditPurchaseModalOpen && <EditPurchaseModal />}
+      {loading && <LoadingSpinner />}
     </div>
   );
 };

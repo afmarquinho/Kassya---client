@@ -1,8 +1,9 @@
 import BackButton from "@/src/components/backButton";
-import NewButton from "@/src/components/newButton";
+//import NewButton from "@/src/components/newButton";
 import GetPurchasesButton from "@/src/components/purchases/getPurchasesButton";
+import NewPurchaseButton from "@/src/components/purchases/newPurchaseButton";
 import PurchasesTable from "@/src/components/purchases/purchasesTable";
-import { CreditCard } from "lucide-react";
+
 
 const ManagementPage = () => {
   return (
@@ -10,7 +11,12 @@ const ManagementPage = () => {
       <div className={`flex justify-between gap-5`}>
         <div className={`flex gap-5`}>
           <GetPurchasesButton />
-          <NewButton name="Nueva Compra" href="/home/purchase/management/new" icon={CreditCard} />
+          {/* <NewButton
+            name="Nueva Compra"
+            href="/home/purchase/management/new"
+            icon={CreditCard}
+          /> */}
+          <NewPurchaseButton/>
         </div>
 
         <BackButton />

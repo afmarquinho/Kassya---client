@@ -1,5 +1,5 @@
 export const formattedDate = (date: Date) => {
-  return new Date(`${date}T00:00:00.000Z`);
+  return (new Date(date).toISOString())
 };
 
 export function desformatearFecha(isoDate: Date): string {
@@ -9,4 +9,3 @@ export function desformatearFecha(isoDate: Date): string {
   const year = date.getUTCFullYear();
   return `${day}/${month}/${year}`;
 }
-

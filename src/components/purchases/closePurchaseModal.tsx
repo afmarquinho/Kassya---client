@@ -1,22 +1,31 @@
 import axiosClient from "@/src/axiosClient";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { TriangleAlert, X } from "lucide-react";
+import LoadingSpinner from "../loadingSpinner";
+import { useState } from "react";
 
 const ClosePurchaseModal = () => {
-  const { toggleClosePurchaseModal, purchaseDetails: purchase, closePurchase } =
+  const { toggleClosePurchaseModal, purchaseDetails, closePurchase } =
     purchaseStore();
+  const [loading, setLoading] = useState<boolean>(false);
+
   const handleClosePurchase = async () => {
-    toggleClosePurchaseModal();
+    setLoading(true);
     try {
-      await axiosClient.put(`/purchases/${purchase?.Purchase_id}`);
+      await axiosClient.put(`/purchases/close/${purchaseDetails?.Purchase_id}`);
       closePurchase();
     } catch (error) {
-      console.error(error);
+      console.error("Error closing purchase:", error);
+    } finally {
+      setLoading(false);
+      toggleClosePurchaseModal();
     }
   };
 
   return (
-    <div
+    <>
+    {
+      loading ? <LoadingSpinner/> :   <div
       className={`fixed inset-0 bg-black bg-opacity-60 dark:bg-opacity-80 z-20 flex justify-center items-center`}
     >
       <div className={`w-full max-w-96 bg-white dark:bg-slate-700`}>
@@ -39,8 +48,8 @@ const ClosePurchaseModal = () => {
         </div>
         <div className={`p-4`}>
           <p>
-            ¿Realmente deseas cerrar la compra? <br /> Recuerda que una vez cerrada ya
-            no la podrás editar o actualizar{" "}
+            ¿Realmente deseas cerrar la compra? <br /> Recuerda que una vez
+            cerrada ya no la podrás editar o actualizar{" "}
           </p>
 
           <button
@@ -52,6 +61,9 @@ const ClosePurchaseModal = () => {
         </div>
       </div>
     </div>
+    }
+  
+    </>
   );
 };
 export default ClosePurchaseModal;

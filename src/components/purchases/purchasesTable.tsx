@@ -31,7 +31,9 @@ const PurchasesTable = () => {
   };
 
   const handleView = async (purchaseId: number) => {
+    setLoading(true);
     await fetchPurchaseDetails(purchaseId);
+    setLoading(false);
     router.push("/home/purchase/management/view");
   };
 

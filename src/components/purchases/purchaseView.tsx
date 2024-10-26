@@ -5,9 +5,13 @@ import ClosePurchaseModal from "./closePurchaseModal";
 import DeletePurchaseModal from "../customers/deletePurchaseModal";
 
 const PurchaseView = () => {
-  const { purchaseDetails: purchase, setClosePurchaseModalOpen, closePurchaseModalOpen, setDeletePurchaseModal, deletePurchaseModal } =
-    purchaseStore(); 
-
+  const {
+    purchaseDetails: purchase,
+    toggleClosePurchaseModal,
+    isClosePurchaseModalOpen,
+    toggleDeletePurchaseModal,
+   isDeletePurchaseModalOpen,
+  } = purchaseStore();
 
   if (!purchase) {
     return (
@@ -91,8 +95,7 @@ const PurchaseView = () => {
           Items
         </h2>
         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`}>
-          {
-          purchase.Product.map((product, i) => (
+          {purchase.Product.map((product, i) => (
             <div
               key={i}
               className={`bg-white dark:bg-slate-900 shadow-lg p-5 w-full hover:bg-blue-200 dark:hover:bg-slate-600 relative`}
@@ -149,7 +152,7 @@ const PurchaseView = () => {
               <button
                 className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors bg-red-600 hover:bg-red-800
                 `}
-                onClick={setClosePurchaseModalOpen}
+                onClick={toggleClosePurchaseModal}
               >
                 <Lock className={`w-5`} />
                 Cerrar Compra
@@ -157,7 +160,7 @@ const PurchaseView = () => {
               <button
                 className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors bg-black
               `}
-                onClick={setDeletePurchaseModal}
+                onClick={toggleDeletePurchaseModal}
               >
                 <Lock className={`w-5`} />
                 Eliminar Compra
@@ -166,8 +169,8 @@ const PurchaseView = () => {
           </div>
         )}
       </div>
-      {closePurchaseModalOpen && <ClosePurchaseModal />}
-      {deletePurchaseModal && <DeletePurchaseModal />}
+      {isClosePurchaseModalOpen && <ClosePurchaseModal />}
+      {isDeletePurchaseModalOpen && <DeletePurchaseModal />}
     </>
   );
 };

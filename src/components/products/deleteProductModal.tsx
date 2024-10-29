@@ -1,38 +1,36 @@
 "use client";
-import axiosClient from "@/src/axiosClient";
-import { purchaseStore } from "@/src/utils/purchaseStore";
-import { TriangleAlert, X } from "lucide-react";
 import { useState } from "react";
 import LoadingSpinner from "../loadingSpinner";
-import { useRouter } from "next/navigation";
+import { TriangleAlert, X } from "lucide-react";
+import { productStore } from "@/src/utils/productStore";
+import axiosClient from "@/src/axiosClient";
+import { purchaseStore } from "@/src/utils/purchaseStore";
 
-const DeletePurchaseModal = () => {
-  const router = useRouter();
-  const { purchaseDetails, toggleDeletePurchaseModal, deletePurchase } =
-    purchaseStore();
+const DeleteProductModal = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { toggleDeleteProductModal, productEdit, clearProductEdit } =
+    productStore();
+  const { updatePurchaseProducts } = purchaseStore();
+
+  const handleCancel = () => {
+    clearProductEdit();
+    toggleDeleteProductModal();
+  };
 
   const handleDelete = async () => {
-    if (!purchaseDetails) return;
-
-    if (purchaseDetails?.Product?.length) {
-      alert(
-        "No puedes proceder a eliminar la compra si tiene productos asociados. Debes eliminar los productos para proceder a eliminar la compra."
-      );
-      toggleDeletePurchaseModal()
+    if (!productEdit) {
       return;
     }
-
     setLoading(true);
     try {
-      await axiosClient.delete(`/purchases/${purchaseDetails?.Purchase_id}`);
-      deletePurchase(purchaseDetails?.Purchase_id);
-      router.back();
+      await axiosClient.delete(`products/${productEdit.Product_id}`);
+      updatePurchaseProducts(productEdit, "delete");
     } catch (error) {
-     console.error("Error al eliminar la compra:", error);
+      console.error("Error al eliminar el ítem: ", error);
     } finally {
       setLoading(false);
-      toggleDeletePurchaseModal();
+      toggleDeleteProductModal();
+      clearProductEdit();
     }
   };
 
@@ -51,8 +49,8 @@ const DeletePurchaseModal = () => {
                 strokeWidth={3}
               />
               <button
-                className={`absolute top-2 right-2 "bg-red-800 hover:bg-yellow-950`}
-                onClick={toggleDeletePurchaseModal}
+                className={`absolute top-2 right-2 bg-red-800 hover:bg-red-950`}
+                onClick={handleCancel}
               >
                 <X
                   className={`  text-yellow-400 cursor-pointer`}
@@ -60,22 +58,26 @@ const DeletePurchaseModal = () => {
                 />
               </button>
               <h2
-                className={`bg-gradient-to-b  text-center text-white uppercase font-bold py-3 from-slate-900 to-black`}
+                className={`bg-gradient-to-b  text-center text-white uppercase font-bold py-3 from-red-500 to-red-600`}
               >
                 Alerta
               </h2>
             </div>
+
             <div className={`p-4`}>
               <p className={`text-center`}>
-                ¿Realmente deseas eliminar la compra? <br /> Recuerda que una
-                vez eliminada no la podrás visualizar{" "}
+                ¿Realmente deseas eliminar este producto:{" "}
+                <span className={`font-medium`}>
+                  {productEdit?.Product_name}
+                </span>
+                ?
               </p>
 
               <button
                 className={`flex gap-1 justify-center items-center  rounded-md px-4 py-2 text-white transition-all mx-auto mt-5 uppercase font-semibold shadow-md bg-gradient-to-b from-red-600 to-red-700 hover:from-red-700 hover:to-red-800`}
                 onClick={handleDelete}
               >
-                Eliminar Compra
+                Eliminar
               </button>
             </div>
           </div>
@@ -84,4 +86,4 @@ const DeletePurchaseModal = () => {
     </>
   );
 };
-export default DeletePurchaseModal;
+export default DeleteProductModal;

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axiosClient from "../axiosClient";
-import { PurchasesType, PurchaseType } from "../types";
+import { ProductType, PurchasesType, PurchaseType } from "../types";
 
 type State = {
   purchases: PurchasesType[];
@@ -22,6 +22,10 @@ type Action = {
   setPurchaseEdit: (purchaseEdit: PurchasesType | null) => void;
   toggleDeletePurchaseModal: () => void;
   deletePurchase: (purchaseId: number) => void;
+  updatePurchaseProducts: (
+    product: ProductType,
+    action: "add" | "update" | "delete"
+  ) => void;
 };
 
 export const purchaseStore = create<State & Action>((set) => ({
@@ -73,7 +77,9 @@ export const purchaseStore = create<State & Action>((set) => ({
 
   toggleClosePurchaseModal: () => {
     set((state) => {
-      document.body.style.overflow = state.isClosePurchaseModalOpen ? "" : "hidden";
+      document.body.style.overflow = state.isClosePurchaseModalOpen
+        ? ""
+        : "hidden";
       return { isClosePurchaseModalOpen: !state.isClosePurchaseModalOpen };
     });
   },
@@ -81,10 +87,15 @@ export const purchaseStore = create<State & Action>((set) => ({
   closePurchase: () => {
     set((state) => {
       if (!state.purchaseDetails) {
-        console.error("No se puede cerrar la compra: no hay una compra activa.");
+        console.error(
+          "No se puede cerrar la compra: no hay una compra activa."
+        );
         return state;
       }
-      const updatedPurchaseDetails = { ...state.purchaseDetails, Purchase_close: true };
+      const updatedPurchaseDetails = {
+        ...state.purchaseDetails,
+        Purchase_close: true,
+      };
       const updatedPurchases = state.purchases.map((purchase) =>
         purchase.Purchase_id === updatedPurchaseDetails.Purchase_id
           ? { ...purchase, Purchase_close: true }
@@ -100,7 +111,9 @@ export const purchaseStore = create<State & Action>((set) => ({
 
   toggleEditPurchaseModal: () => {
     set((state) => {
-      document.body.style.overflow = state.isEditPurchaseModalOpen ? "" : "hidden";
+      document.body.style.overflow = state.isEditPurchaseModalOpen
+        ? ""
+        : "hidden";
       return { isEditPurchaseModalOpen: !state.isEditPurchaseModalOpen };
     });
   },
@@ -111,14 +124,54 @@ export const purchaseStore = create<State & Action>((set) => ({
 
   toggleDeletePurchaseModal: () => {
     set((state) => {
-      document.body.style.overflow = state.isDeletePurchaseModalOpen ? "" : "hidden";
+      document.body.style.overflow = state.isDeletePurchaseModalOpen
+        ? ""
+        : "hidden";
       return { isDeletePurchaseModalOpen: !state.isDeletePurchaseModalOpen };
     });
   },
 
   deletePurchase: (purchaseId) => {
     set((state) => ({
-      purchases: state.purchases.filter((purchase) => purchase.Purchase_id !== purchaseId),
+      purchases: state.purchases.filter(
+        (purchase) => purchase.Purchase_id !== purchaseId
+      ),
     }));
   },
+
+  updatePurchaseProducts: (product, action) =>
+    set((state) => {
+      if (!state.purchaseDetails) return state;
+
+      const currentProducts = state.purchaseDetails.Product;
+      let updatedProducts;
+
+      switch (action) {
+        case 'add':
+          updatedProducts = [...currentProducts, product];
+          break;
+
+        case 'update':
+          updatedProducts = currentProducts.map((p) =>
+            p.Product_id === product.Product_id ? { ...p, ...product } : p
+          );
+          break;
+
+        case 'delete':
+          updatedProducts = currentProducts.filter(
+            (p) => p.Product_ref !== product.Product_ref
+          );
+          break;
+
+        default:
+          return state;
+      }
+
+      return {
+        purchaseDetails: {
+          ...state.purchaseDetails,
+          Product: updatedProducts,
+        },
+      };
+    }),
 }));

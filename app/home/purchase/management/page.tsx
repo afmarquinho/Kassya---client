@@ -11,11 +11,6 @@ const ManagementPage = () => {
       <div className={`flex justify-between gap-5`}>
         <div className={`flex gap-5`}>
           <GetPurchasesButton />
-          {/* <NewButton
-            name="Nueva Compra"
-            href="/home/purchase/management/new"
-            icon={CreditCard}
-          /> */}
           <NewPurchaseButton/>
         </div>
 

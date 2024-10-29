@@ -62,13 +62,13 @@ export type PurchasesType = {
   };
 };
 
-type Product = {
+export type ProductType = {
+  Product_id:number,
   Product_ref: string;
   Product_name: string;
   Product_description: string;
   Product_qty: number;
   Product_cost: number;
-  Product_price: number;
 };
 
 export type PurchaseType = PurchasesType & {
@@ -82,5 +82,5 @@ export type PurchaseType = PurchasesType & {
     User_name: string;
     User_surname: string;
   };
-  Product: Product[];
+  Product: ProductType[];
 };

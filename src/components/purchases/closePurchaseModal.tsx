@@ -4,7 +4,10 @@ import { TriangleAlert, X } from "lucide-react";
 import LoadingSpinner from "../loadingSpinner";
 import { useState } from "react";
 
-const ClosePurchaseModal = () => {
+type Props = {
+  total: number;
+};
+const ClosePurchaseModal = ({ total }: Props) => {
   const { toggleClosePurchaseModal, purchaseDetails, closePurchase } =
     purchaseStore();
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,16 +15,16 @@ const ClosePurchaseModal = () => {
   const handleClosePurchase = async () => {
     setLoading(true);
 
-    if (purchaseDetails?.Product?.length===0) {
-      alert(
-        "No puedes cerrar una compra sin ítems asociados."
-      );
-      toggleClosePurchaseModal()
+    if (purchaseDetails?.Product?.length === 0) {
+      alert("No puedes cerrar una compra sin ítems asociados.");
+      toggleClosePurchaseModal();
       return;
     }
-
     try {
-      await axiosClient.put(`/purchases/close/${purchaseDetails?.Purchase_id}`);
+      await axiosClient.put(
+        `/purchases/close/${purchaseDetails?.Purchase_id}`,
+        { total }
+      );
       closePurchase();
     } catch (error) {
       console.error("Error closing purchase:", error);

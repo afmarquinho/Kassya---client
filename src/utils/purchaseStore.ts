@@ -39,7 +39,24 @@ export const purchaseStore = create<State & Action>((set) => ({
   fetchPurchases: async () => {
     try {
       const response = await axiosClient.get("/purchases");
-      set({ purchases: response.data.data });
+
+      // Mapeo para transformar cada compra al tipo `PurchasesType`
+      const formattedPurchases = response.data.data.map((purchase: PurchasesType) => ({
+        Purchase_id: purchase.Purchase_id,
+        Purchase_description: purchase.Purchase_description,
+        Purchase_date: ( purchase.Purchase_date),
+        Purchase_totalAmount: parseFloat(purchase.Purchase_totalAmount),
+        Purchase_userId: purchase.Purchase_userId,
+        Purchase_supplierId: purchase.Purchase_supplierId,
+        Purchase_paymentMethod: purchase.Purchase_paymentMethod,
+        Purchase_dueDate: (purchase.Purchase_dueDate),
+        Purchase_close: purchase.Purchase_close,
+        Supplier: {
+          Supplier_name: purchase.Supplier.Supplier_name,
+        },
+      }));
+
+      set({ purchases: formattedPurchases });
     } catch (error) {
       console.error("Error al obtener las compras:", error);
     }
@@ -159,7 +176,7 @@ export const purchaseStore = create<State & Action>((set) => ({
 
         case 'delete':
           updatedProducts = currentProducts.filter(
-            (p) => p.Product_ref !== product.Product_ref
+            (p) => p.Product_id !== product.Product_id
           );
           break;
 

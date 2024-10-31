@@ -47,15 +47,17 @@ export type CustomerType = {
   Customer_registrationDate: Date;
   Customer_userId: number;
 };
+
+
 export type PurchasesType = {
   Purchase_id: number;
   Purchase_description: string;
   Purchase_date: Date;
-  Purchase_totalAmount: number;
+  Purchase_totalAmount: string;
   Purchase_userId: number;
   Purchase_supplierId: number;
   Purchase_paymentMethod: string;
-  Purchase_dueDate: Date;
+  Purchase_dueDate: string;
   Purchase_close: boolean;
   Supplier: {
     Supplier_name: string;

@@ -7,6 +7,7 @@ import { productStore } from "@/src/utils/productStore";
 import AddProductModal from "../products/addProductModal";
 import ProductCard from "../products/productCard";
 import DeleteProductModal from "../products/deleteProductModal";
+import { desformatearFecha } from "@/src/utils/helpers";
 
 const PurchaseView = () => {
   const {
@@ -26,6 +27,12 @@ const PurchaseView = () => {
       </p>
     );
   }
+
+  const total = purchaseDetails.Product.reduce(
+    (accumulator, product) =>
+      accumulator + product.Product_cost * product.Product_qty,
+    0
+  );
 
   return (
     <>
@@ -48,11 +55,15 @@ const PurchaseView = () => {
               </tr>
               <tr>
                 <th className={`italic`}>Fecha</th>
-                <td className={`p-3`}>Fecha</td>
+                <td className={`p-3`}>
+                  {desformatearFecha(purchaseDetails.Purchase_date)}
+                </td>
               </tr>
               <tr>
                 <th className={`italic`}>Fecha de Vencimiento</th>
-                <td className={`p-3`}>Fecha de Vencimiento</td>
+                <td className={`p-3`}>
+                  {desformatearFecha(purchaseDetails.Purchase_dueDate)}
+                </td>
               </tr>
 
               <tr>
@@ -78,8 +89,8 @@ const PurchaseView = () => {
                 <th className={`italic`}>Monto</th>
                 <td className={`p-3 font-bold`}>
                   {" "}
-                  ${" "}
-                  {purchaseDetails?.Purchase_totalAmount.toLocaleString(
+                  {" "}
+                  {total.toLocaleString(
                     "en-US",
                     {
                       style: "currency",
@@ -115,48 +126,56 @@ const PurchaseView = () => {
             Esta órden aún no tiene productos asociados
           </p>
         ) : (
-          <>
-            <div
-              className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`}
+          <div
+            className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5`}
+          >
+            {purchaseDetails.Product.map((product) => (
+              <ProductCard key={product.Product_id} product={product} />
+            ))}
+          </div>
+        )}
+        {!purchaseDetails.Purchase_close && (
+          <div
+            className={`w-full bg-red-600 bg-opacity-10 border-4 border-red-600 dark:border-red-300 p-5 `}
+          >
+            <p
+              className={`text-red-600 dark:text-red-200 font-bold uppercase mb-2`}
             >
-              {purchaseDetails.Product.map((product) => (
-                <ProductCard key={product.Product_id} product={product} />
-              ))}
-            </div>
-            {!purchaseDetails.Purchase_close && (
-              <div
-                className={`w-full bg-red-600 bg-opacity-10 border-4 border-red-600 dark:border-red-300 p-5 `}
-              >
-                <p
-                  className={`text-red-600 dark:text-red-200 font-bold uppercase mb-2`}
-                >
-                  Zona de Peligro
-                </p>
-                <div className={`flex gap-5`}>
-                  <button
-                    className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors bg-red-600 hover:bg-red-800
+              Zona de Peligro
+            </p>
+            <div className={`flex gap-5`}>
+              <button
+                className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors  ${
+                  purchaseDetails.Product.length < 1
+                    ? "bg-gray-500"
+                    : "bg-red-600 hover:bg-red-800"
+                }
                 `}
-                    onClick={toggleClosePurchaseModal}
-                  >
-                    <Lock className={`w-5`} />
-                    Cerrar Compra
-                  </button>
-                  <button
-                    className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors bg-black
+                disabled={purchaseDetails.Product.length < 1}
+                onClick={toggleClosePurchaseModal}
+              >
+                <Lock className={`w-5`} />
+                Cerrar Compra
+              </button>
+              <button
+                className={`flex gap-1 justify-center items-center  rounded-md px-2 py-1 text-white transition-colors ${
+                  purchaseDetails.Product.length > 0
+                    ? "bg-gray-500"
+                    : "bg-black"
+                }
               `}
-                    onClick={toggleDeletePurchaseModal}
-                  >
-                    <Lock className={`w-5`} />
-                    Eliminar Compra
-                  </button>
-                </div>
-              </div>
-            )}
-          </>
+                disabled={purchaseDetails.Product.length > 0}
+                onClick={toggleDeletePurchaseModal}
+              >
+                <Lock className={`w-5`} />
+                Eliminar Compra
+              </button>
+            </div>
+          </div>
         )}
       </div>
       {isProductModalOpen && <AddProductModal />}
-      {isClosePurchaseModalOpen && <ClosePurchaseModal />}
+      {isClosePurchaseModalOpen && <ClosePurchaseModal total={total}/>}
       {isDeletePurchaseModalOpen && <DeletePurchaseModal />}
       {isDeleteProductModalOpen && <DeleteProductModal />}
     </>

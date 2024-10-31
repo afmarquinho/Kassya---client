@@ -14,7 +14,6 @@ import { z } from "zod";
 type FormValuesTypes = z.infer<typeof purchaseSchema>;
 
 const PurchaseForm = () => {
- 
   const {
     purchaseEdit,
     updatePurchases,
@@ -69,12 +68,18 @@ const PurchaseForm = () => {
     setValue("Purchase_userId", authUser.User_id);
 
     if (purchaseEdit) {
+      console.log(typeof purchaseEdit.Purchase_dueDate);
       setValue("Purchase_description", purchaseEdit.Purchase_description);
       setValue("Purchase_supplierId", purchaseEdit.Purchase_supplierId);
       setValue("Purchase_paymentMethod", purchaseEdit.Purchase_paymentMethod);
-      setValue("Purchase_dueDate", purchaseEdit.Purchase_dueDate);
     }
   }, [authUser, setValue, purchaseEdit]);
+
+  function desformatearFecha() {
+    const newDate = purchaseEdit?.Purchase_dueDate?.split("T")
+
+    return newDate? newDate[0]: "";
+  }
 
   return (
     <>
@@ -144,6 +149,7 @@ const PurchaseForm = () => {
             type="date"
             className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md"
             {...register("Purchase_dueDate")}
+            defaultValue={purchaseEdit ? desformatearFecha() : ""}
           />
         </label>
 

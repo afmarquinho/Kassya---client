@@ -39,7 +39,14 @@ const PurchasesTable = () => {
 
   useEffect(() => {
     clearPurchaseEdit();
-  }, [clearPurchaseEdit]);
+  }, [clearPurchaseEdit])
+
+  const total = (number: string) => {
+    return (parseFloat(number)).toLocaleString("en-US", {
+      style: "currency",
+      currency: "USD",
+    })}
+  
 
   return (
     <div className="overflow-auto my-5 bg-white p-5 dark:bg-slate-900">
@@ -77,7 +84,10 @@ const PurchasesTable = () => {
                 {desformatearFecha(purchase.Purchase_dueDate)}
               </td>
               <td className="py-2 px-1">{purchase.Purchase_paymentMethod}</td>
-              <td className="py-2 px-1">{purchase.Purchase_totalAmount}</td>
+              <td className="py-2 px-1">
+                
+                {total(purchase.Purchase_totalAmount)}
+              </td>
 
               <td className="py-2 px-1">
                 <button

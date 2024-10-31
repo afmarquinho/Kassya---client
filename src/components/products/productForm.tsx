@@ -2,34 +2,39 @@
 import axiosClient from "@/src/axiosClient";
 import { productStore } from "@/src/utils/productStore";
 import { purchaseStore } from "@/src/utils/purchaseStore";
-//import { zodResolver } from "@hookform/resolvers/zod";
+import productSchema from "@/src/validations/productSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 
-type FormValuesTypes = {
-  Product_ref: string;
-  Product_name: string;
-  Product_description: string;
-  Product_cost: number;
-  Product_qty: number;
-  Product_purchaseId: number;
-};
+type FormValuesTypes = z.infer<typeof productSchema>;
 
 const ProductForm = () => {
   const { purchaseDetails, updatePurchaseProducts } = purchaseStore();
   const { toggleProductModal, productEdit, clearProductEdit } = productStore();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const { register, handleSubmit, reset, setValue, watch } =
-    useForm<FormValuesTypes>({});
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm<FormValuesTypes>({
+    resolver: zodResolver(productSchema),
+    defaultValues: productEdit || {},
+  });
 
   const total = watch("Product_qty") * watch("Product_cost");
 
   const onSubmit: SubmitHandler<FormValuesTypes> = async (data) => {
+    console.log(errors);
+
     setLoading(true);
 
     if (productEdit) {
-      const upData = { ...productEdit, ...data };
+      const upData = { ...productEdit, ...data, Product_total: total };
       const response = await axiosClient.put("/products", upData);
       const updatedData = response.data.data;
       updatedData.Product_cost = parseFloat(updatedData.Product_cost);
@@ -44,6 +49,8 @@ const ProductForm = () => {
         const response = await axiosClient.post("/products", {
           ...data,
           Product_ref: data.Product_ref.toUpperCase(),
+          Product_total: total,
+          Product_purchaseId: purchaseDetails?.Purchase_id,
         });
         const newData = response.data.data;
         newData.Product_cost = parseFloat(newData.Product_cost); //* CONVERTIR A NUMERO YA QUE VIENE DE LA API EN STR
@@ -59,19 +66,8 @@ const ProductForm = () => {
   };
 
   useEffect(() => {
-    if (!purchaseDetails) {
-      return;
-    }
-    setValue("Product_purchaseId", purchaseDetails.Purchase_id);
-
-    if (productEdit) {
-      setValue("Product_name", productEdit.Product_name);
-      setValue("Product_description", productEdit.Product_description);
-      setValue("Product_qty", productEdit.Product_qty);
-      setValue("Product_ref", productEdit.Product_ref);
-      setValue("Product_cost", productEdit.Product_cost);
-    }
-  }, [purchaseDetails, setValue, productEdit]);
+    console.log(productEdit);
+  }, [productEdit]);
 
   return (
     <>
@@ -84,11 +80,11 @@ const ProductForm = () => {
       >
         <label className="flex flex-col">
           Referencia
-          {/* {errors.Purchase_description && (
+          {errors.Product_ref && (
             <div className="text-xs text-red-600 my-0 font-medium">
-              {errors.Purchase_description.message}
+              {errors.Product_ref.message}
             </div>
-          )} */}
+          )}
           <input
             className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md uppercase"
             {...register("Product_ref")}
@@ -96,11 +92,11 @@ const ProductForm = () => {
         </label>
         <label className="flex flex-col">
           Nombre
-          {/* {errors.Purchase_description && (
+          {errors.Product_name && (
             <div className="text-xs text-red-600 my-0 font-medium">
-              {errors.Purchase_description.message}
+              {errors.Product_name.message}
             </div>
-          )} */}
+          )}
           <input
             className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md"
             {...register("Product_name")}
@@ -108,11 +104,11 @@ const ProductForm = () => {
         </label>
         <label className="flex flex-col">
           Descripción
-          {/* {errors.Purchase_description && (
+          {errors.Product_description && (
             <div className="text-xs text-red-600 my-0 font-medium">
-              {errors.Purchase_description.message}
+              {errors.Product_description.message}
             </div>
-          )} */}
+          )}
           <textarea
             className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md resize-none h-16"
             {...register("Product_description")}
@@ -121,11 +117,11 @@ const ProductForm = () => {
         <div className={`flex flex-col md:flex-row gap-5`}>
           <label className="flex flex-col w-full">
             Cantidad
-            {/* {errors.Purchase_description && (
-            <div className="text-xs text-red-600 my-0 font-medium">
-              {errors.Purchase_description.message}
-            </div>
-          )} */}
+            {errors.Product_qty && (
+              <div className="text-xs text-red-600 my-0 font-medium">
+                {errors.Product_qty.message}
+              </div>
+            )}
             <input
               type="number"
               className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md"
@@ -134,11 +130,11 @@ const ProductForm = () => {
           </label>
           <label className="flex flex-col w-full">
             Costo Unitario
-            {/* {errors.Purchase_description && (
-            <|div className="text-xs text-red-600 my-0 font-medium">
-              {errors.Purchase_description.message}
-            </div>
-          )} */}
+            {errors.Product_cost && (
+              <div className="text-xs text-red-600 my-0 font-medium">
+                {errors.Product_cost.message}
+              </div>
+            )}
             <input
               type="number"
               className="bg-slate-300 dark:bg-slate-700 p-2 focus:outline-none text-base rounded-md"

@@ -12,8 +12,7 @@ type Props = {
 
 const SidebarLinks = ({ label, href, icon: Icon }: Props) => {
   const pathname = usePathname();
-  const isActive =
-    pathname === href || (pathname === "/home" && href === "/dashboard");
+  const isActive = pathname === href || pathname.startsWith(href);
   const { isSidebarCollapsed } = useStore();
 
   return (

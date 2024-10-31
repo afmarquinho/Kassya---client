@@ -43,6 +43,7 @@ export const productStore = create<ProductState & ProductActions>((set) => ({
     });
   },
   setProductEdit: (product) => {
+    console.log(product)
     set({ productEdit: product });
   },
   clearProductEdit: () => {

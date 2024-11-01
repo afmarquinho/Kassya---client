@@ -10,12 +10,13 @@ import {
   Wrench,
   X,
 } from "lucide-react";
-import SidebarLinks from "./sidebarLinks";
+
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import { useStore } from "../utils/store";
+import { SidebarLink } from "./SidebarLink";
 
-const Sidebar = () => {
+export const Sidebar = () => {
   const { isSidebarCollapsed, setSidebarCollapsed } = useStore();
 
   return (
@@ -55,31 +56,14 @@ const Sidebar = () => {
         </button>
       </div>
 
-      <SidebarLinks
-        label="Dashboard"
-        href="/home/dashboard"
-        icon={PanelsTopLeft}
-      />
-      <SidebarLinks label="Sales" href="/home/sales" icon={CircleDollarSign} />
-      <SidebarLinks
-        label="Purchase Order"
-        href="/home/purchase"
-        icon={ShoppingBag}
-      />
-      <SidebarLinks label="Masters" href="/home/masters" icon={ClipboardPen} />
-      <SidebarLinks label="Reports" href="/home/reports" icon={NotebookText} />
-      <SidebarLinks label="Warranty" href="/home/warranty" icon={Wrench} />
-      <SidebarLinks
-        label="Manage Users"
-        href="/home/users"
-        icon={UserRoundCog}
-      />
-      <SidebarLinks
-        label="My Profile"
-        href="/home/profile"
-        icon={CircleUserRound}
-      />
+      <SidebarLink label="Dashboard" href="/dashboard" icon={PanelsTopLeft} />
+      <SidebarLink label="Sales" href="/sales" icon={CircleDollarSign} />
+      <SidebarLink label="Purchase Order" href="/purchase" icon={ShoppingBag} />
+      <SidebarLink label="Masters" href="/masters" icon={ClipboardPen} />
+      <SidebarLink label="Reports" href="/reports" icon={NotebookText} />
+      <SidebarLink label="Warranty" href="/warranty" icon={Wrench} />
+      <SidebarLink label="Manage Users" href="/users" icon={UserRoundCog} />
+      <SidebarLink label="My Profile" href="/profile" icon={CircleUserRound} />
     </div>
   );
 };
-export default Sidebar;

@@ -8,7 +8,7 @@ const LoginPage = () => {
   const router = useRouter();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    router.push("/home/dashboard");
+    router.push("/dashboard");
   };
 
   return (

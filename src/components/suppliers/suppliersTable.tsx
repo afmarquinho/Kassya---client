@@ -4,9 +4,10 @@ import { SupplierType } from "@/src/types";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supplierStore } from "@/src/utils/supplierStore";
-import EditSupplierModal from "./editSupplierModal";
+import { EditSupplierModal } from "./EditSupplierModal";
 
-const SuppliersTable = () => {
+
+export const SuppliersTable = () => {
   const router = useRouter();
   const { suppliers, setSupplier, setEditSupplierModal, editSupplierModalOpen,cleanSupplier } = supplierStore();
 
@@ -91,4 +92,4 @@ const SuppliersTable = () => {
     </div>
   );
 };
-export default SuppliersTable;
+

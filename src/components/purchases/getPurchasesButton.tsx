@@ -3,9 +3,10 @@
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { RefreshCcw, ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import LoadingSpinner from "../loadingSpinner";
+import { LoadingSpinner } from "../LoadingSpinner";
 
-const GetPurchasesButton = () => {
+
+export const GetPurchasesButton = () => {
   const { fetchPurchases, purchases } = purchaseStore();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -38,8 +39,6 @@ const GetPurchasesButton = () => {
         )}
       </button>
       {loading && <LoadingSpinner />}
-      
     </>
   );
 };
-export default GetPurchasesButton;

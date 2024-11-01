@@ -1,4 +1,4 @@
-import BackButton from "@/src/components/backButton";
+import BackButton from "@/src/components/BackButton";
 import UserForm from "@/src/components/users/userForm";
 
 const NewUserPage = () => {

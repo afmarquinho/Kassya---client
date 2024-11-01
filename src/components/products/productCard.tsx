@@ -15,7 +15,7 @@ const totalFormatted = (val1: number, val2: number) => {
   });
 };
 
-const ProductCard = ({ product }: Props) => {
+export const ProductCard = ({ product }: Props) => {
   const { purchaseDetails } = purchaseStore();
   const { toggleDeleteProductModal, setProductEdit, toggleProductModal } =
     productStore();
@@ -83,4 +83,3 @@ const ProductCard = ({ product }: Props) => {
     </div>
   );
 };
-export default ProductCard;

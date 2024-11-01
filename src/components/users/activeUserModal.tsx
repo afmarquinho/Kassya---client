@@ -4,7 +4,7 @@ import { userStore } from "../../utils/userStore";
 import axiosClient from "@/src/axiosClient";
 import { UserType } from "@/src/types";
 
-const ActiveUserModal = () => {
+export const ActiveUserModal = () => {
   const { user, setActiveModal, setUser, updateUsers } = userStore();
 
   const handleActiveUser = async () => {
@@ -80,4 +80,4 @@ const ActiveUserModal = () => {
     </div>
   );
 };
-export default ActiveUserModal;
+

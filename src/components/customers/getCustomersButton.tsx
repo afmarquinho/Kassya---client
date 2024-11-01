@@ -2,9 +2,9 @@
 import { customerStore } from "@/src/utils/customerStore";
 import { ShoppingCart } from "lucide-react";
 import { useState } from "react";
-import LoadingSpinner from "../loadingSpinner";
+import {LoadingSpinner }from "../LoadingSpinner";
 
-const GetCustomersButton = () => {
+export const GetCustomersButton = () => {
   const { fetchCustomers } = customerStore();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -32,4 +32,4 @@ const GetCustomersButton = () => {
     </>
   );
 };
-export default GetCustomersButton;
+

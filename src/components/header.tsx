@@ -2,7 +2,7 @@
 import { AlignJustify, Moon, Sun } from "lucide-react";
 import { useStore } from "../utils/store";
 
-const Header = () => {
+export const Header = () => {
   const { isDark, setDarkMode, setSidebarCollapsed } = useStore();
   return (
     <div className={``}>
@@ -24,4 +24,4 @@ const Header = () => {
     </div>
   );
 };
-export default Header;
+

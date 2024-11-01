@@ -1,7 +1,9 @@
-import BackButton from "@/src/components/backButton";
-import CustomersTable from "@/src/components/customers/customersTable";
-import GetCustomersButton from "@/src/components/customers/getCustomersButton";
-import NewButton from "@/src/components/newButton";
+import {
+  BackButton,
+  CustomersTable,
+  GetCustomersButton,
+  NewButton,
+} from "@/src/components";
 import { Archive } from "lucide-react";
 
 const CustomersPage = () => {

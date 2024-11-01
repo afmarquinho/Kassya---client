@@ -10,7 +10,7 @@ type Props = {
   icon: LucideIcon;
 };
 
-const SidebarLinks = ({ label, href, icon: Icon }: Props) => {
+export const SidebarLink = ({ label, href, icon: Icon }: Props) => {
   const pathname = usePathname();
   const isActive = pathname === href || pathname.startsWith(href);
   const { isSidebarCollapsed } = useStore();
@@ -39,4 +39,4 @@ const SidebarLinks = ({ label, href, icon: Icon }: Props) => {
     </Link>
   );
 };
-export default SidebarLinks;
+

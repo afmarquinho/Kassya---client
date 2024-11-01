@@ -3,10 +3,11 @@ import axiosClient from "@/src/axiosClient";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { TriangleAlert, X } from "lucide-react";
 import { useState } from "react";
-import LoadingSpinner from "../loadingSpinner";
 import { useRouter } from "next/navigation";
+import { LoadingSpinner } from "../LoadingSpinner";
 
-const DeletePurchaseModal = () => {
+
+export const DeletePurchaseModal = () => {
   const router = useRouter();
   const { purchaseDetails, toggleDeletePurchaseModal, deletePurchase } =
     purchaseStore();
@@ -19,7 +20,7 @@ const DeletePurchaseModal = () => {
       alert(
         "No puedes proceder a eliminar la compra si tiene productos asociados. Debes eliminar los productos para proceder a eliminar la compra."
       );
-      toggleDeletePurchaseModal()
+      toggleDeletePurchaseModal();
       return;
     }
 
@@ -29,7 +30,7 @@ const DeletePurchaseModal = () => {
       deletePurchase(purchaseDetails?.Purchase_id);
       router.back();
     } catch (error) {
-     console.error("Error al eliminar la compra:", error);
+      console.error("Error al eliminar la compra:", error);
     } finally {
       setLoading(false);
       toggleDeletePurchaseModal();
@@ -84,4 +85,3 @@ const DeletePurchaseModal = () => {
     </>
   );
 };
-export default DeletePurchaseModal;

@@ -2,9 +2,11 @@
 
 import { supplierStore } from "@/src/utils/supplierStore";
 import { Power, PowerOff } from "lucide-react";
-import ActiveUserModal from "@/src/components/suppliers/activeSupplierModal";
+import { ActiveUserModal } from "../users/ActiveUserModal";
 
-const SupplierView = () => {
+
+
+export const SupplierView = () => {
   const { supplier, setActiveModal, activeModalOpen } = supplierStore();
   if (!supplier) {
     return (
@@ -85,4 +87,3 @@ const SupplierView = () => {
   
   )
 }
-export default SupplierView

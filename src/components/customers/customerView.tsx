@@ -2,7 +2,7 @@
 import { customerStore } from "@/src/utils/customerStore";
 import {  ShoppingCart } from "lucide-react";
 
-const CustomerView = () => {
+export const CustomerView = () => {
   const { customer } = customerStore();
 
   if (!customer) {
@@ -81,4 +81,4 @@ const CustomerView = () => {
     </div>
   );
 };
-export default CustomerView;
+

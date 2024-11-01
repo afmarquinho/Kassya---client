@@ -1,5 +1,4 @@
-import BackButton from "@/src/components/backButton";
-import CustomerView from "@/src/components/customers/customerView";
+import { BackButton, CustomerView } from "@/src/components";
 
 const CustomerPage = () => {
   //TODO: INCLUIR QUE CUANDO TRAIGA LOS DATOS DE LA BBDD, INMEDIAMENTE RELACIONE EL USUARIO QUE CREÓ EL PROVEEDOR

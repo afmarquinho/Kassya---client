@@ -1,8 +1,9 @@
 import { Ban } from "lucide-react";
-import UserForm from "./userForm";
-import { userStore } from "@/src/utils/userStore";
 
-const EditUserModal = () => {
+import { userStore } from "@/src/utils/userStore";
+import { UserForm } from "./UserForm";
+
+export const EditUserModal = () => {
   const { setEditUserModal, cleanUser } = userStore();
   const handleEdit = () => {
     setEditUserModal();
@@ -26,4 +27,3 @@ const EditUserModal = () => {
     </div>
   );
 };
-export default EditUserModal;

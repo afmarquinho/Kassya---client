@@ -1,4 +1,5 @@
-import MenuButton from "@/src/components/menuButton";
+
+import { MenuButton } from "@/src/components";
 import { HandCoins, Truck } from "lucide-react";
 
 const MastersPage = () => {

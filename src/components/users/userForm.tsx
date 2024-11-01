@@ -9,7 +9,7 @@ import { z } from "zod";
 
 type FormValuesType = z.infer<typeof userSchema>;
 
-const UserForm = () => {
+export const UserForm = () => {
   const { user, cleanUser, setEditUserModal, updateUsers } = userStore();
   const router = useRouter();
 
@@ -228,4 +228,4 @@ const UserForm = () => {
     </>
   );
 };
-export default UserForm;
+

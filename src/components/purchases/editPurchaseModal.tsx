@@ -1,8 +1,8 @@
 import { Ban } from "lucide-react";
-import PurchaseForm from "./purchaseForm";
 import { purchaseStore } from "@/src/utils/purchaseStore";
+import { PurchaseForm } from "./PurchaseForm";
 
-const EditPurchaseModal = () => {
+export const EditPurchaseModal = () => {
   const { toggleEditPurchaseModal, clearPurchaseEdit } = purchaseStore();
 
   const handleCancel = () => {
@@ -27,4 +27,4 @@ const EditPurchaseModal = () => {
   );
 };
 
-export default EditPurchaseModal;
+

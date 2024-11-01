@@ -3,10 +3,10 @@
 import { CreditCard } from "lucide-react";
 import { purchaseStore } from "../../utils/purchaseStore";
 import { useState } from "react";
-import LoadingSpinner from "../loadingSpinner";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { supplierStore } from "@/src/utils/supplierStore";
 
-const NewPurchaseButton = () => {
+export const NewPurchaseButton = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toggleEditPurchaseModal } = purchaseStore();
   const { fetchSuppliers } = supplierStore();
@@ -34,4 +34,3 @@ const NewPurchaseButton = () => {
     </>
   );
 };
-export default NewPurchaseButton;

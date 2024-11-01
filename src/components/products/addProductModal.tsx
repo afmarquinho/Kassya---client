@@ -2,9 +2,10 @@
 
 import { Ban } from "lucide-react";
 import { productStore } from "@/src/utils/productStore";
-import ProductForm from "./productForm";
+import { ProductForm } from "./ProductForm";
 
-const AddProductModal = () => {
+
+export const AddProductModal = () => {
   const { toggleProductModal, clearProductEdit } = productStore();
   const handleCancel = () => {
     toggleProductModal();
@@ -31,4 +32,4 @@ const AddProductModal = () => {
     </>
   );
 };
-export default AddProductModal;
+

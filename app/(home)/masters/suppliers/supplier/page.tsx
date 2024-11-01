@@ -1,5 +1,4 @@
-import BackButton from "@/src/components/backButton";
-import SupplierView from "@/src/components/suppliers/supplierView";
+import { BackButton, SupplierView } from "@/src/components";
 
 const SupplierDetails = () => {
 

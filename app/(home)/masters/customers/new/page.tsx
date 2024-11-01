@@ -1,5 +1,5 @@
-import BackButton from "@/src/components/backButton";
-import CustomerForm from "@/src/components/customers/customerForm";
+import { BackButton, CustomerForm } from "@/src/components";
+
 
 const NewCustomerPage = () => {
   return (

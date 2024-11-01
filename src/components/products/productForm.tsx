@@ -10,7 +10,7 @@ import { z } from "zod";
 
 type FormValuesTypes = z.infer<typeof productSchema>;
 
-const ProductForm = () => {
+export const ProductForm = () => {
   const { purchaseDetails, updatePurchaseProducts } = purchaseStore();
   const { toggleProductModal, productEdit, clearProductEdit } = productStore();
   const [loading, setLoading] = useState<boolean>(false);
@@ -167,4 +167,4 @@ const ProductForm = () => {
     </>
   );
 };
-export default ProductForm;
+

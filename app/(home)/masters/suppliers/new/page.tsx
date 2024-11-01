@@ -1,5 +1,5 @@
-import BackButton from "@/src/components/backButton";
-import SupplierForm from "@/src/components/suppliers/supplierForm";
+import { BackButton, SupplierForm } from "@/src/components";
+
 
 const NewSupplierPage = () => {
   return (

@@ -13,7 +13,7 @@ import { z } from "zod";
 
 type FormValuesTypes = z.infer<typeof purchaseSchema>;
 
-const PurchaseForm = () => {
+export const PurchaseForm = () => {
   const {
     purchaseEdit,
     updatePurchases,
@@ -164,4 +164,4 @@ const PurchaseForm = () => {
     </>
   );
 };
-export default PurchaseForm;
+

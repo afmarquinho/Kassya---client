@@ -1,5 +1,4 @@
-import BackButton from "@/src/components/backButton";
-import PurchaseView from "@/src/components/purchases/purchaseView";
+import { BackButton, PurchaseView } from "@/src/components";
 
 const PurchasePage = () => {
   return (

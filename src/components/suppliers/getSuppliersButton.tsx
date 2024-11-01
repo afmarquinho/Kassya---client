@@ -3,7 +3,7 @@ import { supplierStore } from "@/src/utils/supplierStore";
 import { Truck } from "lucide-react";
 import { useState } from "react";
 
-const GetSuppliersButton = () => {
+export const GetSuppliersButton = () => {
   const { fetchSuppliers } = supplierStore();
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -28,4 +28,4 @@ const GetSuppliersButton = () => {
     </button>
   );
 };
-export default GetSuppliersButton;
+

@@ -4,7 +4,7 @@ import axiosClient from "@/src/axiosClient";
 import { SupplierType } from "@/src/types";
 import { supplierStore } from "@/src/utils/supplierStore";
 
-const ActivesupplierModal = () => {
+export const ActivesupplierModal = () => {
   const { supplier, setActiveModal, setSupplier, updateSuppliers } =
     supplierStore();
 
@@ -80,4 +80,4 @@ const ActivesupplierModal = () => {
     </div>
   );
 };
-export default ActivesupplierModal;
+

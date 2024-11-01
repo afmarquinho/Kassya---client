@@ -2,7 +2,7 @@ import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import Link from "next/link";
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer className={`bg-slate-300 dark:bg-slate-800`}>
       <div className={`hidden md:flex justify-center items-center gap-2`}>
@@ -30,4 +30,4 @@ const Footer = () => {
     </footer>
   );
 };
-export default Footer;
+

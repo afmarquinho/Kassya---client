@@ -3,13 +3,13 @@ import { purchaseStore } from "@/src/utils/purchaseStore";
 import { FilePenLine, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import EditPurchaseModal from "./editPurchaseModal";
 import { desformatearFecha } from "@/src/utils/helpers";
 import { PurchasesType } from "@/src/types";
 import { supplierStore } from "@/src/utils/supplierStore";
-import LoadingSpinner from "../loadingSpinner";
+import { EditPurchaseModal } from "./EditPurchaseModal";
+import { LoadingSpinner } from "../LoadingSpinner";
 
-const PurchasesTable = () => {
+export const PurchasesTable = () => {
   const router = useRouter();
   const {
     purchases,
@@ -117,4 +117,4 @@ const PurchasesTable = () => {
   );
 };
 
-export default PurchasesTable;
+

@@ -11,7 +11,7 @@ import { z } from "zod";
 
 type FormValuesType = z.infer<typeof supplierSchema>;
 
-const SupplierForm = () => {
+export const SupplierForm = () => {
   const { supplier, updateSuppliers, setEditSupplierModal, cleanSupplier } = supplierStore();
   const { authUser } = userStore();
   const router = useRouter();
@@ -203,4 +203,4 @@ const SupplierForm = () => {
     </>
   );
 };
-export default SupplierForm;
+

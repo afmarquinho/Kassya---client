@@ -1,15 +1,15 @@
 "use client";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { Lock, LockOpen } from "lucide-react";
-import ClosePurchaseModal from "./closePurchaseModal";
-import DeletePurchaseModal from "../customers/deletePurchaseModal";
 import { productStore } from "@/src/utils/productStore";
-import AddProductModal from "../products/addProductModal";
-import ProductCard from "../products/productCard";
-import DeleteProductModal from "../products/deleteProductModal";
 import { desformatearFecha } from "@/src/utils/helpers";
+import { ProductCard } from "../products/ProductCard";
+import { AddProductModal } from "../products/AddProductModal";
+import { ClosePurchaseModal } from "./ClosePurchaseModal";
+import { DeletePurchaseModal } from "../customers/DeletePurchaseModal";
+import { DeleteProductModal } from "../products/DeleteProductModal";
 
-const PurchaseView = () => {
+export const PurchaseView = () => {
   const {
     purchaseDetails,
     toggleClosePurchaseModal,
@@ -89,14 +89,10 @@ const PurchaseView = () => {
                 <th className={`italic`}>Monto</th>
                 <td className={`p-3 font-bold`}>
                   {" "}
-                  {" "}
-                  {total.toLocaleString(
-                    "en-US",
-                    {
-                      style: "currency",
-                      currency: "USD",
-                    }
-                  )}
+                  {total.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
                 </td>
               </tr>
               <tr>
@@ -175,10 +171,9 @@ const PurchaseView = () => {
         )}
       </div>
       {isProductModalOpen && <AddProductModal />}
-      {isClosePurchaseModalOpen && <ClosePurchaseModal total={total}/>}
+      {isClosePurchaseModalOpen && <ClosePurchaseModal total={total} />}
       {isDeletePurchaseModalOpen && <DeletePurchaseModal />}
       {isDeleteProductModalOpen && <DeleteProductModal />}
     </>
   );
 };
-export default PurchaseView;

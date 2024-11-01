@@ -4,9 +4,10 @@ import { customerStore } from "@/src/utils/customerStore";
 import { FilePenLine, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import EditCustomerModal from "./editCustomerModal";
+import { EditCustomerModal } from "./EditCustomerModal";
 
-const CustomersTable = () => {
+
+export const CustomersTable = () => {
   const router = useRouter();
   const {
     customers,
@@ -28,7 +29,7 @@ const CustomersTable = () => {
 
   useEffect(() => {
     cleanCustomer();
-  }, []);
+  }, [cleanCustomer]);
 
   return (
     <div className="overflow-auto my-5 bg-white p-5 dark:bg-slate-900">
@@ -88,4 +89,4 @@ const CustomersTable = () => {
     </div>
   );
 };
-export default CustomersTable;
+

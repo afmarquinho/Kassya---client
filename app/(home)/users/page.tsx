@@ -1,4 +1,4 @@
-import NewButton from "@/src/components/newButton";
+import NewButton from "@/src/components/NewButton";
 import GetUsersButton from "@/src/components/users/getUsersButton";
 import UserTable from "@/src/components/users/usersTable";
 import { UserPlus } from "lucide-react";

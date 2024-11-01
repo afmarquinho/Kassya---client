@@ -1,13 +1,14 @@
+"use client"
 import axiosClient from "@/src/axiosClient";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 import { TriangleAlert, X } from "lucide-react";
-import LoadingSpinner from "../loadingSpinner";
+import { LoadingSpinner } from "../LoadingSpinner";
 import { useState } from "react";
 
 type Props = {
   total: number;
 };
-const ClosePurchaseModal = ({ total }: Props) => {
+export const ClosePurchaseModal = ({ total }: Props) => {
   const { toggleClosePurchaseModal, purchaseDetails, closePurchase } =
     purchaseStore();
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,4 +83,3 @@ const ClosePurchaseModal = ({ total }: Props) => {
     </>
   );
 };
-export default ClosePurchaseModal;

@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import LoadingSpinner from "../loadingSpinner";
+import {LoadingSpinner} from "../LoadingSpinner";
 import { TriangleAlert, X } from "lucide-react";
 import { productStore } from "@/src/utils/productStore";
 import axiosClient from "@/src/axiosClient";
 import { purchaseStore } from "@/src/utils/purchaseStore";
 
-const DeleteProductModal = () => {
+export const DeleteProductModal = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const { toggleDeleteProductModal, productEdit, clearProductEdit } =
     productStore();
@@ -86,4 +86,3 @@ const DeleteProductModal = () => {
     </>
   );
 };
-export default DeleteProductModal;

@@ -2,7 +2,7 @@ import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 type Props = { href: string; icon: LucideIcon; name: string };
-const MenuButton = ({ href, icon: Icon, name }: Props) => {
+export const MenuButton = ({ href, icon: Icon, name }: Props) => {
   return (
     <div className={`bg-white dark:bg-slate-800 p-4 shadow-lg rounded-lg`}>
       <Link
@@ -16,4 +16,4 @@ const MenuButton = ({ href, icon: Icon, name }: Props) => {
     </div>
   );
 };
-export default MenuButton;
+

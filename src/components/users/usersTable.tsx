@@ -1,7 +1,7 @@
 "use client";
 import { FilePenLine, Search } from "lucide-react";
 import { userStore } from "../../utils/userStore";
-import EditUserModal from "./editUserModal";
+import { EditUserModal } from "./EditUserModal";
 import { UserType } from "@/src/types";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ const UsersTable = () => {
 
   useEffect(() => {
     cleanUser();
-  }, []);
+  }, [cleanUser]);
 
   return (
     <div className="overflow-auto my-5 bg-white p-5 dark:bg-slate-900">

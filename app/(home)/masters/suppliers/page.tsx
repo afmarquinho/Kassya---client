@@ -1,9 +1,10 @@
-import BackButton from "@/src/components/backButton";
-import NewButton from "@/src/components/newButton";
-import GetSuppliersButton from "@/src/components/suppliers/getSuppliersButton";
-import SupplierTable from "@/src/components/suppliers/suppliersTable";
+import {
+  BackButton,
+  GetSuppliersButton,
+  NewButton,
+  SuppliersTable,
+} from "@/src/components";
 import { Archive } from "lucide-react";
-
 
 const SuppliersPage = () => {
   //TODO: ORDENER LA TABLA POR APELLI CUANDO SE EDITE PARA QUE NO AGREGE EL PROVEEDOR AL FINAL.
@@ -21,7 +22,7 @@ const SuppliersPage = () => {
         </div>
         <BackButton />
       </div>
-      <SupplierTable />
+      <SuppliersTable />
     </>
   );
 };

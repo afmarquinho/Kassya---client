@@ -2,7 +2,7 @@
 import { Undo2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-const BackButton = () => {
+export const BackButton = () => {
   const router = useRouter();
 
   return (
@@ -15,4 +15,4 @@ const BackButton = () => {
     </button>
   );
 };
-export default BackButton;
+

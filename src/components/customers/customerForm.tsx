@@ -11,7 +11,7 @@ import { z } from "zod";
 
 type FormValuesType = z.infer<typeof customerSchema>;
 
-const CustomerForm = () => {
+export const CustomerForm = () => {
   const { customer, updateCustomers, setEditCustomerModal, cleanCustomer } =
     customerStore();
 
@@ -209,4 +209,4 @@ const CustomerForm = () => {
     </>
   );
 };
-export default CustomerForm;
+

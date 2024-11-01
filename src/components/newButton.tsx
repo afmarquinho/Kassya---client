@@ -2,7 +2,7 @@ import { LucideIcon } from "lucide-react";
 import Link from "next/link";
 
 type Props = { name: string; href: string; icon: LucideIcon };
-const NewButton = ({ name, href, icon: Icon }: Props) => {
+export const NewButton = ({ name, href, icon: Icon }: Props) => {
   return (
     <Link
       href={href}
@@ -13,4 +13,4 @@ const NewButton = ({ name, href, icon: Icon }: Props) => {
     </Link>
   );
 };
-export default NewButton;
+

@@ -1,7 +1,7 @@
 "use client";
 import { userStore } from "@/src/utils/userStore";
 import { Power, PowerOff, User } from "lucide-react";
-import ActiveUserModal from "./activeUserModal";
+import { ActiveUserModal } from "./ActiveUserModal";
 
 const UserView = () => {
   const { user, setActiveModal, activeModalOpen } = userStore();

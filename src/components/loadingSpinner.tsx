@@ -1,4 +1,4 @@
-const LoadingSpinner = () => {
+export const LoadingSpinner = () => {
   return (
     <div
       className={`fixed inset-0 bg-black bg-opacity-60 z-20 flex justify-center items-center`}
@@ -16,4 +16,3 @@ const LoadingSpinner = () => {
     </div>
   );
 };
-export default LoadingSpinner;

@@ -1,4 +1,5 @@
-import MenuButton from "@/src/components/menuButton";
+
+import { MenuButton } from "@/src/components";
 import { BriefcaseBusiness, ChartNoAxesCombined } from "lucide-react";
 
 const page = () => {

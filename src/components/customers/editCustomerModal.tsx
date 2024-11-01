@@ -1,8 +1,8 @@
 import { customerStore } from "@/src/utils/customerStore";
-import CustomerForm from "./customerForm";
+import { CustomerForm } from "./CustomerForm";
 import { Ban } from "lucide-react";
 
-const EditCustomerModal = () => {
+export const EditCustomerModal = () => {
   const { setEditCustomerModal, cleanCustomer } = customerStore();
   const handleEdit = () => {
     setEditCustomerModal();
@@ -25,4 +25,3 @@ const EditCustomerModal = () => {
     </div>
   );
 };
-export default EditCustomerModal;

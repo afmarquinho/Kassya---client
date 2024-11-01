@@ -1,8 +1,8 @@
 import { Ban } from "lucide-react";
 import { supplierStore } from "@/src/utils/supplierStore";
-import SupplierForm from "./supplierForm";
+import {SupplierForm} from "./SupplierForm";
 
-const EditSupplierModal = () => {
+export const EditSupplierModal = () => {
   const { setEditSupplierModal, cleanSupplier } = supplierStore();
   const handleEdit = () => {
     setEditSupplierModal();
@@ -26,4 +26,4 @@ const EditSupplierModal = () => {
     </div>
   );
 };
-export default EditSupplierModal;
+
